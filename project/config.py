@@ -9,7 +9,6 @@ class ConfigurationMode(Enum):
 
 
 class DevelopmentConfig(object):
-    DEBUG = True
     DEVELOPMENT = True
     TESTING = False
     HOST = config('POSTGRES_HOST')
