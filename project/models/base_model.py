@@ -8,7 +8,6 @@ class BaseModel(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now())
     updated_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now())
 
-    def update(self, updated_at=None):
+    def update(self):
         # Only updated_at should be able to be updated
-        if updated_at:
-            self.updated_at = updated_at
+        self.updated_at = datetime.now()
