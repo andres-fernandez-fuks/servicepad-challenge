@@ -16,11 +16,11 @@ class DevelopmentConfig(object):
     PASSWORD = config('POSTGRES_PASSWORD')
     DATABASE = config('POSTGRES_DB')
     SQLALCHEMY_DATABASE_URI = f'postgresql+psycopg2://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}'
-    SQL_ALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 class TestConfig(object):
     DEBUG = True
     TESTING = True
     BASEDIR = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASEDIR, 'app.db')
-    SQL_ALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
