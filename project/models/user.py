@@ -1,9 +1,16 @@
 from project.models.base_model import BaseModel
+from project import db
 
 class User(BaseModel):
     '''
     Represents an user, with email, password, fullname and photo
     '''
+    __tablename__ = 'users'
+
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    fullname = db.Column(db.String(255), nullable=False)
+    photo = db.Column(db.String(255), nullable=False)
 
     def __init__(self, email, password, fullname, photo):
         self.email = email
