@@ -1,5 +1,6 @@
 import pytest
 from project import create_app, db
+from project.models.user import User
 
 @pytest.fixture(scope="function")
 def test_client():
@@ -18,3 +19,15 @@ def init_db(test_client):
 @pytest.fixture(scope="function")
 def _db():
     return db
+
+@pytest.fixture(scope="function")
+def saved_user(init_db, _db):
+    user = User(
+        email="example@gmail.com",
+        password="password",
+        fullname="John Doe",
+        photo="image.jpg"
+    )
+    _db.session.add(user)
+    _db.session.commit()
+    return user

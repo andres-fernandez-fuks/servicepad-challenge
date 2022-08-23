@@ -35,7 +35,7 @@ def test_user_update(init_db):
     new_data = {key: f"new_{value}" for key, value in DEFAULT_USER_DATA.items()}
 
     TIMESTAMP_1 = datetime.now()
-    user = UserRepository.update(user.id, **new_data)
+    user.update(**new_data)
     TIME_STAMP_2 = datetime.now()
 
     user = UserRepository.load_by_id(user.id)

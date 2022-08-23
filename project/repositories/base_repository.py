@@ -27,12 +27,5 @@ class BaseRepository:
         return obj
 
     @classmethod
-    def update(cls, obj_id: int, **kwargs):
-        obj = cls.load_by_id(obj_id)
-        obj.update(**kwargs)
-        db.session.commit()
-        return obj
-
-    @classmethod
     def exists(cls, id):
         return cls.object_class.query.filter_by(id=id).first() is not None
