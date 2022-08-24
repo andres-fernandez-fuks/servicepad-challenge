@@ -19,5 +19,4 @@ class UserController:
 
     @classmethod
     def delete_user(cls, id):
-        user = UserRepository.load_by_id(id)
-        return UserRepository.delete(user)
+        return UserRepository.delete(id)

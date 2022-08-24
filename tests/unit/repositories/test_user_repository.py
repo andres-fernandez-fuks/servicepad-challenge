@@ -52,7 +52,7 @@ def test_user_update(init_db):
 def test_user_delete(init_db):
     user = UserRepository.save(User(**DEFAULT_USER_DATA))
     user_id = user.id
-    user = UserRepository.delete(user)
+    user = UserRepository.delete(user_id)
     user = UserRepository.load_by_id(user_id)
 
     assert user is None

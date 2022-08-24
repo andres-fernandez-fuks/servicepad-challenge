@@ -21,7 +21,10 @@ class BaseRepository:
         return obj
 
     @classmethod
-    def delete(cls, obj):
+    def delete(cls, obj_id):
+        obj = cls.load_by_id(obj_id)
+        if not obj:
+            return
         db.session.delete(obj)
         db.session.commit()
         return obj

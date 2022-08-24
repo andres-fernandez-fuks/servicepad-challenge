@@ -57,8 +57,9 @@ def test_publication_update(init_db, saved_user):
 
 def test_publication_delete(init_db, saved_user):
     publication = create_publication(saved_user.id)
-    publication = PublicationRepository.delete(publication)
-    publication = PublicationRepository.load_by_id(publication.id)
+    publication_id = publication.id
+    publication = PublicationRepository.delete(publication_id)
+    publication = PublicationRepository.load_by_id(publication_id)
 
     assert publication is None
 

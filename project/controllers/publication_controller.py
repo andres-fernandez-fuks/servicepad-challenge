@@ -12,7 +12,7 @@ class PublicationController:
     @classmethod
     def get_publication_by_id(cls, user_id, publication_id):
         cls.validate_ownership(user_id, publication_id)
-        return PublicationRepository.load_by_id(id)
+        return PublicationRepository.load_by_id(publication_id)
 
     @classmethod
     def create_publication(cls, user_id, data):
@@ -29,8 +29,7 @@ class PublicationController:
     @classmethod
     def delete_publication(cls, user_id, publication_id):
         cls.validate_ownership(user_id, publication_id)
-        publication = PublicationRepository.load_by_id(publication_id)
-        return PublicationRepository.delete(publication)
+        return PublicationRepository.delete(publication_id)
 
     @classmethod
     def validate_ownership(cls, user_id, publication_id):
