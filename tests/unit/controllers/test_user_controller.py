@@ -17,7 +17,7 @@ def test_user_creation(init_db):
     user = UserController.get_user_by_id(1)
     assert user.id == 1
     assert user.email == user_data["email"]
-    assert user.password == user_data["password"]
+    assert user.is_correct_password(user_data["password"])
     assert user.fullname == user_data["fullname"]
     assert user.photo == user_data["photo"]
 
@@ -29,7 +29,6 @@ def test_user_obtention_by_id(init_db, saved_user):
     user = UserController.get_user_by_id(saved_user.id)
     assert user.id == saved_user.id
     assert user.email == saved_user.email
-    assert user.password == saved_user.password
     assert user.fullname == saved_user.fullname
     assert user.photo == saved_user.photo
     assert user.created_at == saved_user.created_at
@@ -55,7 +54,7 @@ def test_user_update(init_db, saved_user):
 
     assert user.id == saved_user.id
     assert user.email == new_data["email"]
-    assert user.password == new_data["password"]
+    assert user.is_correct_password(new_data["password"])
     assert user.fullname == new_data["fullname"]
     assert user.photo == new_data["photo"]
     assert user.created_at == saved_user.created_at

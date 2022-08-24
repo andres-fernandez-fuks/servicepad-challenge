@@ -20,12 +20,12 @@ def test_user_creation(init_db):
     user = UserRepository.load_by_id(user.id)
 
     assert user.email == DEFAULT_USER_DATA["email"]
-    assert user.password == DEFAULT_USER_DATA["password"]
+    assert user.is_correct_password(DEFAULT_USER_DATA["password"])
     assert user.fullname == DEFAULT_USER_DATA["fullname"]
     assert user.photo == DEFAULT_USER_DATA["photo"]
     assert user.id == EXPECTED_USER_ID
-    assert TIMESTAMP_1 < user.created_at < TIME_STAMP_2 # cannot test for specific value
-    assert TIMESTAMP_1 < user.updated_at < TIME_STAMP_2  # cannot test for specific value
+    assert TIMESTAMP_1 < user.created_at < TIME_STAMP_2
+    assert TIMESTAMP_1 < user.updated_at < TIME_STAMP_2
 
 
 def test_user_update(init_db):
@@ -41,7 +41,7 @@ def test_user_update(init_db):
     user = UserRepository.load_by_id(user.id)
 
     assert user.email == "new_" + DEFAULT_USER_DATA["email"]
-    assert user.password == "new_" + DEFAULT_USER_DATA["password"]
+    assert user.is_correct_password("new_" + DEFAULT_USER_DATA["password"])
     assert user.fullname == "new_" + DEFAULT_USER_DATA["fullname"]
     assert user.photo == "new_" + DEFAULT_USER_DATA["photo"]
     assert user.id == user_id
