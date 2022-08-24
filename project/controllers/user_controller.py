@@ -2,10 +2,6 @@ from project.models.user import User
 from project.repositories.user_repository import UserRepository
 
 class UserController:
-    
-    @classmethod
-    def get_all_users(cls):
-        return UserRepository.load_all()
 
     @classmethod
     def get_user_by_id(cls, id):
