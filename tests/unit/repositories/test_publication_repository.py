@@ -10,14 +10,17 @@ DEFAULT_PUBLICATION_DATA = {
     "status": "open",
 }
 
+def create_publication(user_id):
+    publication_data = DEFAULT_PUBLICATION_DATA.copy()
+    publication_data["user_id"] = user_id
+    return PublicationRepository.save(Publication(**publication_data))
+
 
 def test_publication_creation(init_db, saved_user):
     EXPECTED_PUBLICATION_ID = len(PublicationRepository.load_all()) + 1
-    publication_data = DEFAULT_PUBLICATION_DATA.copy()
-    publication_data["user_id"] = saved_user.id
+    
     TIMESTAMP_1 = datetime.now()
-
-    publication = PublicationRepository.save(Publication(**publication_data))
+    publication = create_publication(saved_user.id)
     TIME_STAMP_2 = datetime.now()
 
     publication = PublicationRepository.load_by_id(publication.id)
@@ -36,9 +39,7 @@ def test_publication_creation(init_db, saved_user):
 
 
 def test_publication_update(init_db, saved_user):
-    original_data = DEFAULT_PUBLICATION_DATA.copy()
-    original_data["user_id"] = saved_user.id
-    publication = PublicationRepository.save(Publication(**original_data))
+    publication = create_publication(saved_user.id)
 
     new_data = {key: f"New {value}" for key, value in DEFAULT_PUBLICATION_DATA.items()}
     TIMESTAMP_1 = datetime.now()
@@ -52,4 +53,12 @@ def test_publication_update(init_db, saved_user):
     assert publication.status == "New " + DEFAULT_PUBLICATION_DATA["status"]
     assert publication.user.id == saved_user.id
     assert TIMESTAMP_1 < publication.updated_at < TIME_STAMP_2
+
+
+def test_publication_delete(init_db, saved_user):
+    publication = create_publication(saved_user.id)
+    publication = PublicationRepository.delete(publication)
+    publication = PublicationRepository.load_by_id(publication.id)
+
+    assert publication is None
 
