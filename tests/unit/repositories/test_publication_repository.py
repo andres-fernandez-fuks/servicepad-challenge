@@ -41,16 +41,21 @@ def test_publication_creation(init_db, saved_user):
 def test_publication_update(init_db, saved_user):
     publication = create_publication(saved_user.id)
 
-    new_data = {key: f"New {value}" for key, value in DEFAULT_PUBLICATION_DATA.items()}
+    new_data =  {
+        "title": "New Example Publication",
+        "description": "New Example Publication Description",
+        "priority": "Low",
+        "status": "closed",
+    }
     TIMESTAMP_1 = datetime.now()
     publication.update(**new_data)
     TIME_STAMP_2 = datetime.now()
     publication = PublicationRepository.load_by_id(publication.id)
 
-    assert publication.title == "New " + DEFAULT_PUBLICATION_DATA["title"]
-    assert publication.description == "New " + DEFAULT_PUBLICATION_DATA["description"]
-    assert publication.priority == "New " + DEFAULT_PUBLICATION_DATA["priority"]
-    assert publication.status == "New " + DEFAULT_PUBLICATION_DATA["status"]
+    assert publication.title == new_data["title"]
+    assert publication.description == new_data["description"]
+    assert publication.priority == new_data["priority"]
+    assert publication.status == new_data["status"]
     assert publication.user.id == saved_user.id
     assert TIMESTAMP_1 < publication.updated_at < TIME_STAMP_2
 

@@ -1,4 +1,5 @@
 from project.controllers.user_controller import UserController
+from project.helpers.request_helpers.user_helper import UserRequest
 
 
 def test_user_creation(init_db):
@@ -13,7 +14,9 @@ def test_user_creation(init_db):
         "photo": "photo.jpg",
     }
 
-    UserController.create_user(user_data)
+    user_request = UserRequest(**user_data)
+
+    UserController.create_user(user_request)
     user = UserController.get_user_by_id(1)
     assert user.id == 1
     assert user.email == user_data["email"]

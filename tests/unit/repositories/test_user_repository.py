@@ -32,7 +32,12 @@ def test_user_update(init_db):
     user = UserRepository.save(User(**DEFAULT_USER_DATA))
     user_id = user.id
     user_creation_date = user.created_at
-    new_data = {key: f"new_{value}" for key, value in DEFAULT_USER_DATA.items()}
+    new_data = {
+        "fullname": "Jack Doe",
+        "photo": "new photo.jpg",
+        "email": "new@gmail",
+        "password": "newpassword",
+    }
 
     TIMESTAMP_1 = datetime.now()
     user.update(**new_data)
@@ -40,10 +45,10 @@ def test_user_update(init_db):
 
     user = UserRepository.load_by_id(user.id)
 
-    assert user.email == "new_" + DEFAULT_USER_DATA["email"]
-    assert user.is_correct_password("new_" + DEFAULT_USER_DATA["password"])
-    assert user.fullname == "new_" + DEFAULT_USER_DATA["fullname"]
-    assert user.photo == "new_" + DEFAULT_USER_DATA["photo"]
+    assert user.email == new_data["email"]
+    assert user.is_correct_password(new_data["password"])
+    assert user.fullname == new_data["fullname"]
+    assert user.photo == new_data["photo"]
     assert user.id == user_id
     assert user.created_at == user_creation_date
     assert TIMESTAMP_1 < user.updated_at < TIME_STAMP_2

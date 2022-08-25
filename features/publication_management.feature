@@ -1,5 +1,5 @@
 Feature: Publication CRUD management
-    Background: 
+    Background:
         Given I am an authenticated user
     Scenario: Publication creation
         When I create a new publication
@@ -19,7 +19,7 @@ Feature: Publication CRUD management
         Given I created a publication
         When I delete the publication
         Then the publication is deleted
-       
+
     Scenario: Cannot edit another user's publication
         Given I created a publication
         And I am logged in as another user

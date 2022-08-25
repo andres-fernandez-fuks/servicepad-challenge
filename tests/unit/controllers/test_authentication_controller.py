@@ -26,8 +26,7 @@ def test_logout(init_db, saved_user, saved_user_password):
     """
 
     credentials = {"username": saved_user.email, "password": saved_user_password}
-    login_info = AuthenticationController.login(credentials)
-    token = login_info["token"]
+    token = AuthenticationController.login(credentials)
     user = UserController.get_user_by_id(saved_user.id)
 
     assert user.is_logged_in()  # to verify logout works, user must be logged in first
