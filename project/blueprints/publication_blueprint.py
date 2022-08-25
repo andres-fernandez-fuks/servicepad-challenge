@@ -6,6 +6,7 @@ from project.helpers.request_helpers.publication_helper import (
     PublicationRequest,
     PublicationResponse,
 )
+from project.helpers.authentication_helper import token_required
 
 PUBLICATIONS_ENDPOINT = "/users/<user_id>/publications"
 
@@ -26,6 +27,7 @@ publication_blueprint = APIBlueprint("publication_blueprint", __name__)
         },
     },
 )
+@token_required()
 def get_user_publications(user_id):
     return PublicationController.get_from_user(user_id)
 
@@ -39,6 +41,7 @@ def get_user_publications(user_id):
         }
     },
 )
+@token_required()
 def create_publication(user_id, body: PublicationRequest):
     return PublicationController.create_publication(user_id, PublicationRequest)
 
@@ -55,6 +58,7 @@ def create_publication(user_id, body: PublicationRequest):
         },
     },
 )
+@token_required()
 def update_publication(user_id, publication_id, body: PublicationRequest):
     return PublicationController.update_publication(
         user_id, publication_id, PublicationRequest
@@ -70,5 +74,6 @@ def update_publication(user_id, publication_id, body: PublicationRequest):
         }
     },
 )
+@token_required()
 def delete_publication(user_id, publication_id):
     return PublicationController.delete_publication(user_id, publication_id)
