@@ -30,7 +30,7 @@ def test_publication_obtention_by_id(init_db, saved_user, saved_publication):
     """
     Test get publication by id
     """
-    publication = PublicationController.get_publication_by_id(
+    publication = PublicationController.get_user_publication(
         saved_user.id, saved_publication.id
     )
     assert publication.id == saved_publication.id

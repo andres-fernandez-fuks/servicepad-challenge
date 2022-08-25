@@ -1,5 +1,4 @@
 from project.controllers.user_controller import UserController
-from project.helpers.request_helpers.user_helper import UserRequest
 
 
 def test_user_creation(init_db):
@@ -14,10 +13,9 @@ def test_user_creation(init_db):
         "photo": "photo.jpg",
     }
 
-    user_request = UserRequest(**user_data)
 
-    UserController.create_user(user_request)
-    user = UserController.get_user_by_id(1)
+    UserController.create_user(user_data)
+    user = UserController.get_user(1)
     assert user.id == 1
     assert user.email == user_data["email"]
     assert user.is_correct_password(user_data["password"])
@@ -29,7 +27,7 @@ def test_user_obtention_by_id(init_db, saved_user):
     """
     Test get user by id
     """
-    user = UserController.get_user_by_id(saved_user.id)
+    user = UserController.get_user(saved_user.id)
     assert user.id == saved_user.id
     assert user.email == saved_user.email
     assert user.fullname == saved_user.fullname
@@ -53,7 +51,7 @@ def test_user_update(init_db, saved_user):
     }
 
     UserController.update_user(saved_user.id, new_data)
-    user = UserController.get_user_by_id(saved_user.id)
+    user = UserController.get_user(saved_user.id)
 
     assert user.id == saved_user.id
     assert user.email == new_data["email"]
@@ -70,7 +68,7 @@ def test_user_delete(init_db, saved_user):
     """
 
     UserController.delete_user(saved_user.id)
-    user = UserController.get_user_by_id(saved_user.id)
+    user = UserController.get_user(saved_user.id)
 
     assert user is None
 

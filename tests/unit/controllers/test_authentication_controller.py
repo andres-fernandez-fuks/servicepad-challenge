@@ -9,7 +9,7 @@ def test_login(init_db, saved_user, saved_user_password):
 
     credentials = {"username": saved_user.email, "password": saved_user_password}
     AuthenticationController.login(credentials)
-    user = UserController.get_user_by_id(saved_user.id)
+    user = UserController.get_user(saved_user.id)
 
     assert user.id == saved_user.id
     assert user.email == saved_user.email
@@ -27,11 +27,11 @@ def test_logout(init_db, saved_user, saved_user_password):
 
     credentials = {"username": saved_user.email, "password": saved_user_password}
     token = AuthenticationController.login(credentials)
-    user = UserController.get_user_by_id(saved_user.id)
+    user = UserController.get_user(saved_user.id)
 
     assert user.is_logged_in()  # to verify logout works, user must be logged in first
 
     AuthenticationController.logout(token)
-    user = UserController.get_user_by_id(saved_user.id)
+    user = UserController.get_user(saved_user.id)
 
     assert not user.is_logged_in()

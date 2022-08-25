@@ -25,3 +25,15 @@ class NotFound(ErrorResponse):
 class UnprocessableEntity(ErrorResponse):
     code: int = Field(422, description="Status Code")
     message: str = Field("Unprocessable entity")
+
+
+class ExtraResponseAssembler:
+    @staticmethod
+    def assemble(extra_responses: Optional[List]) -> dict:
+        if extra_responses is None:
+            return {}
+        response =         {
+            str(code): {"content": {"application/json": {"schema": ErrorResponse.schema()}}}
+            for code in extra_responses
+        }
+        return response
