@@ -31,9 +31,6 @@ publication_blueprint = APIBlueprint("publication_blueprint", __name__)
 )
 @token_required
 def get_user_publications(path: PublicationBasePath):
-    import pdb
-
-    pdb.set_trace()
     return PublicationController.get_all_user_publications(path.user_id)
 
 

@@ -9,7 +9,7 @@ class UserController:
 
     @classmethod
     def create_user(cls, data):
-        return UserRepository.save(User(**data))
+        return UserRepository.save(User(**data.dict()))
 
     @classmethod
     def update_user(cls, id, data):

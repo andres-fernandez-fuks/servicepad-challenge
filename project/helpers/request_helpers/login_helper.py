@@ -5,7 +5,6 @@ from project.helpers.request_helpers.user_helper import UserResponse
 
 class LoginResponse(BaseModel):
     token: str = Field(..., description="The generated token")
-    user: UserResponse = Field(..., description="The logged in user")
 
 
 class LogoutRequest(BaseModel):

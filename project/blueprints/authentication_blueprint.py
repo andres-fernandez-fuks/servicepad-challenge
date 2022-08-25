@@ -28,12 +28,14 @@ authentication_blueprint = APIBlueprint("authentication_blueprint", __name__)
     },
 )
 def login(header: LoginHeader):
-    return AuthenticationController.login(request.authorization)
+    token = AuthenticationController.login(request.authorization)
+    return {"token": token}, HTTPStatus.OK
 
 
 @authentication_blueprint.post(
     f"{LOGOUT_ENDPOINT}", responses={f"{HTTPStatus.OK}": None}
 )
 def logout(headers: LogoutRequest):
-    return AuthenticationController.logout(headers)
+    AuthenticationController.logout(headers)
+    return None, HTTPStatus.OK
 

@@ -32,7 +32,7 @@ class AuthenticationController:
             raise AuthenticationException()
 
         user.login()
-        return {"token": AuthenticationController.generate_token(user), "user": user}
+        return AuthenticationController.generate_token(user).decode("utf-8")
 
     @staticmethod
     def logout(token):

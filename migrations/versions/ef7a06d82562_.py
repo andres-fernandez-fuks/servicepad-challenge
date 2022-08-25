@@ -1,4 +1,4 @@
-"""empty message
+"""adds User table to the database
 
 Revision ID: ef7a06d82562
 Revises: 

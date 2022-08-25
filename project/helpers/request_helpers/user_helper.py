@@ -11,9 +11,11 @@ class UserResponse(BaseModel):
 
 
 class UserRequest(BaseModel):
-    id: int = Field(..., description="The user's id")
-    created_at: str = Field(..., description="The user's creation time")
-    updated_at: str = Field(..., description="The user's last update time")
+    fullname: str = Field(..., description="The user's full name")
+    password: str = Field(..., description="The user's password")
     email: str = Field(..., description="The user's email")
-    full_name: str = Field(..., description="The user's full name")
     photo: str = Field(..., description="The user's photo url")
+
+
+class UserBasePath(BaseModel):
+    user_id: int = Field(..., description="The user's id")
