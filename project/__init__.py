@@ -32,7 +32,7 @@ def register_blueprints(app):
     from project.blueprints.authentication_blueprint import authentication_blueprint
     from project.blueprints.reset_blueprint import reset_blueprint
 
-    app.register_blueprint(publication_blueprint)
-    app.register_blueprint(users_blueprint)
-    app.register_blueprint(authentication_blueprint)
-    app.register_blueprint(reset_blueprint)
+    app.register_api(publication_blueprint)
+    app.register_api(users_blueprint)
+    app.register_api(authentication_blueprint)
+    app.register_api(reset_blueprint)
