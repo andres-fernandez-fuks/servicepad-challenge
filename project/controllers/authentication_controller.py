@@ -31,7 +31,7 @@ class AuthenticationController:
         if not user or not user.is_correct_password(user_credentials["password"]):
             raise AuthenticationException()
 
-        user.login()
+        UserRepository.login(user)
         return AuthenticationController.generate_token(user).decode("utf-8")
 
     @staticmethod
@@ -41,5 +41,5 @@ class AuthenticationController:
         if not user:
             raise AuthenticationException()
 
-        user.logout()
+        UserRepository.logout(user)
 

@@ -10,6 +10,7 @@ DEFAULT_PUBLICATION_DATA = {
     "status": "open",
 }
 
+
 def create_publication(user_id):
     publication_data = DEFAULT_PUBLICATION_DATA.copy()
     publication_data["user_id"] = user_id
@@ -18,7 +19,7 @@ def create_publication(user_id):
 
 def test_publication_creation(init_db, saved_user):
     EXPECTED_PUBLICATION_ID = len(PublicationRepository.load_all()) + 1
-    
+
     TIMESTAMP_1 = datetime.now()
     publication = create_publication(saved_user.id)
     TIME_STAMP_2 = datetime.now()
@@ -41,14 +42,14 @@ def test_publication_creation(init_db, saved_user):
 def test_publication_update(init_db, saved_user):
     publication = create_publication(saved_user.id)
 
-    new_data =  {
+    new_data = {
         "title": "New Example Publication",
         "description": "New Example Publication Description",
         "priority": "Low",
         "status": "closed",
     }
     TIMESTAMP_1 = datetime.now()
-    publication.update(**new_data)
+    PublicationRepository.update(publication.id, **new_data)
     TIME_STAMP_2 = datetime.now()
     publication = PublicationRepository.load_by_id(publication.id)
 

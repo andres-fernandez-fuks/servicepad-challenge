@@ -22,9 +22,8 @@ class PublicationController:
     @classmethod
     def update_publication(cls, user_id, publication_id, publication_new_data):
         cls.validate_ownership(user_id, publication_id)
-        publication = PublicationRepository.load_by_id(publication_id)
-        publication.update(**publication_new_data)
-        return PublicationRepository.save(publication)
+        publication = PublicationRepository.update(publication_id, **publication_new_data)
+        return publication
 
     @classmethod
     def delete_publication(cls, user_id, publication_id):

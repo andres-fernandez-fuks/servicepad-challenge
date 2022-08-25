@@ -40,7 +40,7 @@ def test_user_update(init_db):
     }
 
     TIMESTAMP_1 = datetime.now()
-    user.update(**new_data)
+    UserRepository.update(user_id, **new_data)
     TIME_STAMP_2 = datetime.now()
 
     user = UserRepository.load_by_id(user.id)

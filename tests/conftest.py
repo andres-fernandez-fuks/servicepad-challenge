@@ -29,6 +29,7 @@ def _db():
 def saved_user_password():
     return "password"
 
+
 @pytest.fixture(scope="function")
 def saved_user(init_db, _db):
     user = User(
@@ -37,6 +38,7 @@ def saved_user(init_db, _db):
         fullname="John Doe",
         photo="image.jpg",
     )
+    user.logged_in = True  # needed for authentication purposes
     _db.session.add(user)
     _db.session.commit()
     return user

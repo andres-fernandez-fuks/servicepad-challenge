@@ -1,3 +1,4 @@
+from project.exceptions.exceptions import ObjectNotFoundException
 from project.models.base_model import BaseModel
 from project import db
 
@@ -17,6 +18,15 @@ class BaseRepository:
     @classmethod
     def load_by_field(cls, field, value):
         return cls.object_class.query.filter_by(**{field: value}).first()
+
+    @classmethod
+    def update(cls, obj_id, **kwargs):
+        obj = cls.load_by_id(obj_id)
+        if not obj:
+            raise ObjectNotFoundException(cls.object_class.__name__, obj_id)
+        obj.update(**kwargs)
+        db.session.commit()
+        return obj
 
     @classmethod
     def save(cls, obj):
