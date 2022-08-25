@@ -177,7 +177,7 @@ def step_impl(context):
     context.headers = {"Authorization": f"Bearer {request.json()['token']}"}
 
 
-@then("I get a {error_type} error message")
+@then("I get an {error_type} error")
 def step_impl(context, error_type):
     expected_error_status = determine_status_code(error_type)
     assert context.response.status_code == expected_error_status

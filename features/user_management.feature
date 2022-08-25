@@ -28,10 +28,10 @@ Feature: User CRUD management
         Given I am an user with certain data
         And I am logged in as another user
         When I edit my data
-        Then I get a Ownership error message
+        Then I get an Ownership error
 
     Scenario: Cannot get user data without credentials
         Given I am not logged in
         When I edit my data
-        Then I get a Authentication error message
+        Then I get an Authentication error
     

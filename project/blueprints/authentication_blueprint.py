@@ -2,6 +2,7 @@ from http import HTTPStatus
 from flask import request
 from flask_openapi3 import APIBlueprint
 from project.controllers.authentication_controller import AuthenticationController
+from project.helpers.request_helpers.exception_handler import ExceptionHandler
 
 from project.helpers.request_helpers.login_helper import (
     LoginHeader,
@@ -28,14 +29,19 @@ authentication_blueprint = APIBlueprint("authentication_blueprint", __name__)
     },
 )
 def login(header: LoginHeader):
-    token = AuthenticationController.login(request.authorization)
-    return {"token": token}, HTTPStatus.OK
+    try:
+        token = AuthenticationController.login(request.authorization)
+        return {"token": token}, HTTPStatus.OK
+    except Exception as e:
+        return ExceptionHandler.handle_exception(e)
 
 
 @authentication_blueprint.post(
     f"{LOGOUT_ENDPOINT}", responses={f"{HTTPStatus.OK}": None}
 )
 def logout(header: LogoutRequest):
-    AuthenticationController.logout(header.token)
-    return "", HTTPStatus.NO_CONTENT
-
+    try:
+        AuthenticationController.logout(header.token)
+        return "", HTTPStatus.NO_CONTENT
+    except Exception as e:
+        return ExceptionHandler.handle_exception(e)

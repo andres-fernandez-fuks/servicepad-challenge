@@ -68,14 +68,14 @@ def step_impl(context):
     request = requests.post(LOGIN_URL, headers=headers)
 
     assert request.status_code == 200
-    context.token = request.json()["token"]
+    context.headers = {"Authorization": f"Bearer {request.json()['token']}"}
 
 
 @when("I get my data")
 def step_impl(context):
     request = requests.get(
         f"{USERS_URL}/{context.user_id}",
-        headers={"Authorization": f"Basic {context.token}"}
+        headers=context.headers,
     )
     context.response = request
 
@@ -95,8 +95,11 @@ def step_impl(context):
         "email": "new@gmail",
         "password": "newpassword",
     }
-    headers = {"Authorization": f"Basic {context.token}"}
 
+    try: 
+        headers = context.headers 
+    except Exception:
+        headers = {"Authorization": f"Basic {context.token}"}
     request = requests.put(
         f"{USERS_URL}/{context.user_id}", headers=headers, json=context.new_data
     )
@@ -115,18 +118,12 @@ def step_impl(context):
 @when("I delete my account")
 def step_impl(context):
 
-    request = requests.delete(
-        f"{USERS_URL}/{context.user_id}",
-        headers={"Authorization": f"Basic {context.token}"},
-    )
+    requests.delete(f"{USERS_URL}/{context.user_id}", headers=context.headers)
 
 
 @then("I am not an user anymore")
 def step_impl(context):
-    request = requests.get(
-        f"{USERS_URL}/{context.user_id}",
-        headers={"Authorization": f"Basic {context.token}"},
-    )
+    request = requests.get(f"{USERS_URL}/{context.user_id}", headers=context.headers)
 
     assert request.status_code == 404
 

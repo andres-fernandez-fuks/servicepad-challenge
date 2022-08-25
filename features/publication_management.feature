@@ -24,10 +24,10 @@ Feature: Publication CRUD management
         Given I created a publication
         And I login as another user
         When I update the publication
-        Then I get a Ownership error message
+        Then I get an Ownership error
 
     Scenario: Cannot delete publication without credentials
         Given I created a publication
         And I logout of the application
         When I delete the publication
-        Then I get a Authentication error message
+        Then I get an Authentication error
