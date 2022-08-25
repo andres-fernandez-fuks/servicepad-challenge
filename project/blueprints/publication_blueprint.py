@@ -1,7 +1,10 @@
 from http import HTTPStatus
+from flask import jsonify
 from flask_openapi3 import APIBlueprint
 from project.controllers.publication_controller import PublicationController
+from project.exceptions.exceptions import ObjectNotFoundException, OwnershipException
 from project.helpers.request_helpers.error_helper import ErrorResponse
+from project.helpers.request_helpers.exception_handler import ExceptionHandler
 from project.helpers.request_helpers.publication_helper import (
     PublicationBasePath,
     PublicationCompletePath,
@@ -9,12 +12,15 @@ from project.helpers.request_helpers.publication_helper import (
     PublicationResponse,
 )
 from project.helpers.authentication_helper import token_required
+from project.schemas.schemas import PublicationSchema
 
 PUBLICATIONS_ENDPOINT = "/users/<user_id>/publications"
 
 EXPECTED_RESPONSES = {}
 
 publication_blueprint = APIBlueprint("publication_blueprint", __name__)
+
+publication_schema = PublicationSchema()
 
 
 @publication_blueprint.get(
@@ -48,9 +54,14 @@ def get_user_publications(path: PublicationBasePath):
 )
 @token_required
 def get_user_publication(path: PublicationCompletePath):
-    return PublicationController.get_publication_by_id(
-        path.user_id, path.publication_id
-    )
+    try:
+        publication = PublicationController.get_user_publication(
+            path.user_id, path.publication_id
+        )
+        return jsonify(publication_schema.dump(publication))
+    except Exception as e:
+        return ExceptionHandler.handle_exception(e)
+
 
 
 @publication_blueprint.post(
@@ -64,7 +75,11 @@ def get_user_publication(path: PublicationCompletePath):
 )
 @token_required
 def create_publication(path: PublicationBasePath, body: PublicationRequest):
-    return PublicationController.create_publication(path.user_id, PublicationRequest)
+    try:
+        publication = PublicationController.create_publication(path.user_id, body.dict())
+        return jsonify(publication_schema.dump(publication)), HTTPStatus.CREATED
+    except Exception as e:
+        return ExceptionHandler.handle_exception(e)
 
 
 @publication_blueprint.put(
@@ -81,9 +96,13 @@ def create_publication(path: PublicationBasePath, body: PublicationRequest):
 )
 @token_required
 def update_publication(path: PublicationCompletePath, body: PublicationRequest):
-    return PublicationController.update_publication(
-        path.user_id, path.publication_id, PublicationRequest
-    )
+    try:
+        publication = PublicationController.update_publication(
+            path.user_id, path.publication_id, body.dict()
+        )
+        return jsonify(publication_schema.dump(publication))
+    except Exception as e:
+        return ExceptionHandler.handle_exception(e)
 
 
 @publication_blueprint.delete(
@@ -92,9 +111,16 @@ def update_publication(path: PublicationCompletePath, body: PublicationRequest):
     extra_responses={
         f"{HTTPStatus.NOT_FOUND}": {
             "content": {"application/json": {"schema": ErrorResponse.schema()}}
+        },
+        f"{HTTPStatus.UNAUTHORIZED}": {
+            "content": {"application/json": {"schema": ErrorResponse.schema()}}
         }
     },
 )
 @token_required
 def delete_publication(path: PublicationCompletePath):
-    return PublicationController.delete_publication(path.user_id, path.publication_id)
+    try:
+        PublicationController.delete_publication(path.user_id, path.publication_id)
+        return "", HTTPStatus.NO_CONTENT
+    except Exception as e:
+        return ExceptionHandler.handle_exception(e)

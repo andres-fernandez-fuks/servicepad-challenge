@@ -29,7 +29,7 @@ user_schema = UserSchema()
     },
 )
 def create_user(body: UserRequest):
-    user = UserController.create_user(body)
+    user = UserController.create_user(body.dict())
     return jsonify(user_schema.dump(user)), HTTPStatus.CREATED
 
 
@@ -42,7 +42,7 @@ def create_user(body: UserRequest):
 )
 @token_required
 def get_user(path: UserBasePath):
-    user = UserController.get_user_by_id(path.user_id)
+    user = UserController.get_user(path.user_id)
     if user is None:
         return jsonify({"message": "User not found"}), HTTPStatus.NOT_FOUND
     return jsonify(user_schema.dump(user))

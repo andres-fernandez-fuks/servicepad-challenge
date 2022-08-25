@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from flask import current_app
 import jwt
 
-from project.exceptions.authentication_exception import AuthenticationException
+from project.exceptions.exceptions import AuthenticationException
 from project.repositories.user_repository import UserRepository
 
 
