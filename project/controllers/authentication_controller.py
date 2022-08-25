@@ -15,11 +15,15 @@ class AuthenticationController:
         return jwt.encode(
             {
                 "id": user.id,
-                "exp": datetime.utcnow()
-                + timedelta(hours=cls.AUTH_VALID_PERIOD_HS),
+                "exp": datetime.utcnow() + timedelta(hours=cls.AUTH_VALID_PERIOD_HS),
             },
             current_app.config["SECRET_KEY"],
         )
+
+
+    @classmethod
+    def decode_token(cls, token):
+        return jwt.decode(token, current_app.config["SECRET_KEY"])
 
     @staticmethod
     def login(user_credentials):
@@ -28,14 +32,12 @@ class AuthenticationController:
             raise AuthenticationException()
 
         user.login()
-        return {
-            "token": AuthenticationController.generate_token(user),
-            "user": user
-        }
+        return {"token": AuthenticationController.generate_token(user), "user": user}
 
     @staticmethod
-    def logout(user_id):
-        user = UserRepository.load_by_id(user_id)
+    def logout(token):
+        user_info = AuthenticationController.decode_token(token)
+        user = UserRepository.load_by_id(user_info["id"])
         if not user:
             raise AuthenticationException()
 
