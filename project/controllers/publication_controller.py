@@ -1,4 +1,4 @@
-from project.exceptions.exceptions import ObjectNotFoundException, OwnershipException
+from project.exceptions.exceptions import AuthenticationException, ObjectNotFoundException, OwnershipException
 from project.models.publication import Publication
 from project.repositories.publication_repository import PublicationRepository
 from project.repositories.user_repository import UserRepository
@@ -37,5 +37,9 @@ class PublicationController:
         if not publication:
             raise ObjectNotFoundException("publication", publication_id)
         user = UserRepository.load_by_id(user_id)
-        if not user or not publication or user.id != publication.user_id:
+        if not user:
+            raise ObjectNotFoundException("user", user_id)
+        if user.id != publication.user_id:
             raise OwnershipException()
+        if not user.is_logged_in():
+            raise AuthenticationException()       

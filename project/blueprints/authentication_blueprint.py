@@ -35,7 +35,7 @@ def login(header: LoginHeader):
 @authentication_blueprint.post(
     f"{LOGOUT_ENDPOINT}", responses={f"{HTTPStatus.OK}": None}
 )
-def logout(headers: LogoutRequest):
-    AuthenticationController.logout(headers)
-    return None, HTTPStatus.OK
+def logout(header: LogoutRequest):
+    AuthenticationController.logout(header.token)
+    return "", HTTPStatus.NO_CONTENT
 

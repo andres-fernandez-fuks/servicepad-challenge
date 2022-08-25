@@ -42,5 +42,4 @@ class AuthenticationController:
             raise AuthenticationException()
 
         user.logout()
-        return {"message": "User logged out"}
 

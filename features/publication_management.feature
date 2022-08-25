@@ -20,14 +20,14 @@ Feature: Publication CRUD management
         When I delete the publication
         Then the publication is deleted
 
-    # Scenario: Cannot edit another user's publication
-    #     Given I created a publication
-    #     And I am logged in as another user
-    #     When I try to update the publication
-    #     Then I get an error message
+    Scenario: Cannot edit another user's publication
+        Given I created a publication
+        And I login as another user
+        When I update the publication
+        Then I get a Ownership error message
 
-    # Scenario: Cannot delete publication without credentials
-    #     Given I created a publication
-    #     And I am not logged in as a user
-    #     When I try to delete the publication
-    #     Then I get an error message
+    Scenario: Cannot delete publication without credentials
+        Given I created a publication
+        And I logout of the application
+        When I delete the publication
+        Then I get a Authentication error message
