@@ -26,6 +26,10 @@ def _db():
 
 
 @pytest.fixture(scope="function")
+def saved_user_password():
+    return "password"
+
+@pytest.fixture(scope="function")
 def saved_user(init_db, _db):
     user = User(
         email="example@gmail.com",

@@ -26,6 +26,8 @@ def initialize_extensions(app):
 def register_blueprints(app):
     from project.blueprints.publication_blueprint import publication_blueprint
     from project.blueprints.user_blueprint import users_blueprint
+    from project.blueprints.authentication_blueprint import authentication_blueprint
 
     app.register_blueprint(publication_blueprint)
     app.register_blueprint(users_blueprint)
+    app.register_blueprint(authentication_blueprint)

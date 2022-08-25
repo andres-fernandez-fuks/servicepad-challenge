@@ -15,6 +15,10 @@ class BaseRepository:
         return cls.object_class.query.get(id)
 
     @classmethod
+    def load_by_field(cls, field, value):
+        return cls.object_class.query.filter_by(**{field: value}).first()
+
+    @classmethod
     def save(cls, obj):
         db.session.add(obj)
         db.session.commit()
