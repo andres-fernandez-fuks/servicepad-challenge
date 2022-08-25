@@ -14,8 +14,13 @@ def token_required(f):
             return "Access denied", 401
 
         try:
-            jwt.decode(token, current_app.config["SECRET_KEY"])
+            token_info = jwt.decode(token, current_app.config["SECRET_KEY"])
         except:
+            return "Access denied", 401
+
+        path_user_id = kwargs["path"].user_id
+        token_user_id = token_info["id"]
+        if path_user_id != token_user_id:
             return "Access denied", 401
 
         return f(*args, **kwargs)

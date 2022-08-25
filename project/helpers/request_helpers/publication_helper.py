@@ -24,3 +24,10 @@ class PublicationRequest(BaseModel):
     status: str = Field(..., description="The publication's status")
     time_since_creation: str = Field(..., description="The time since the publication was created")
     user: UserResponse = Field(..., description="The publication's user")
+
+
+class PublicationBasePath(BaseModel):
+    user_id: int = Field(..., description="The user's id")
+
+class PublicationCompletePath(PublicationBasePath):
+    publication_id: int = Field(..., description="The publication's id")
