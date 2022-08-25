@@ -68,15 +68,91 @@ def step_impl(context):
     request = requests.post(LOGIN_URL, headers=headers)
 
     assert request.status_code == 200
+    context.token = request.json()["token"]
+
 
 @when("I get my data")
 def step_impl(context):
-    request = requests.get(f"{USERS_URL}/{context.user_id}", headers={"Authorization": f"Basic {DEFAULT_USER_DATA['email']}:{DEFAULT_USER_DATA['password']}"})
+    request = requests.get(
+        f"{USERS_URL}/{context.user_id}",
+        headers={"Authorization": f"Basic {context.token}"}
+    )
     context.response = request
+
 
 @then("I get the correct data")
 def step_impl(context):
     assert context.response.json()["email"] == DEFAULT_USER_DATA["email"]
     assert context.response.json()["fullname"] == DEFAULT_USER_DATA["fullname"]
     assert context.response.json()["photo"] == DEFAULT_USER_DATA["photo"]
+
+
+@when("I edit my data")
+def step_impl(context):
+    context.new_data = {
+        "fullname": "Jack Doe",
+        "photo": "new photo.jpg",
+        "email": "new@gmail",
+        "password": "newpassword",
+    }
+    headers = {"Authorization": f"Basic {context.token}"}
+
+    request = requests.put(
+        f"{USERS_URL}/{context.user_id}", headers=headers, json=context.new_data
+    )
+
+    context.response = request
+
+
+@then("My data is updated")
+def step_impl(context):
+    assert context.response.status_code == 200
+    assert context.response.json()["fullname"] == context.new_data["fullname"]
+    assert context.response.json()["photo"] == context.new_data["photo"]
+    assert context.response.json()["email"] == context.new_data["email"]
+
+
+@when("I delete my account")
+def step_impl(context):
+
+    request = requests.delete(
+        f"{USERS_URL}/{context.user_id}",
+        headers={"Authorization": f"Basic {context.token}"},
+    )
+
+
+@then("I am not an user anymore")
+def step_impl(context):
+    request = requests.get(
+        f"{USERS_URL}/{context.user_id}",
+        headers={"Authorization": f"Basic {context.token}"},
+    )
+
+    assert request.status_code == 404
+
+
+@given("I am logged in as another user")
+def step_impl(context):
+    new_data = {
+        "fullname": "Jack Doe",
+        "photo": "new photo.jpg",
+        "email": "new@gmail",
+        "password": "newpassword",
+    }
+    request = requests.post(USERS_URL, json=new_data)
+    second_user_id = request.json()["id"]
+    headers = create_auth_header(new_data["email"], new_data["password"])
+    request = requests.post(LOGIN_URL, headers=headers)
+    context.token = request.json()["token"]
+
+
+@then("I am informed about an error")
+def step_impl(context):
+    assert context.response.status_code == 401
+
+
+@given("I am not logged in")
+def step_impl(context):
+    context.user_id = 1
+    context.token = None
 

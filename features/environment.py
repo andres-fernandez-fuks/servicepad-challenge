@@ -1,6 +1,9 @@
-# import requests
+import requests
+from decouple import config
 
-# RESET_URL = "http://localhost:8080/database/reset"
+PORT = config("FLASK_RUN_PORT", cast=int, default=5000)
 
-# def before_scenario(scenario, context):
-#     requests.post(RESET_URL)
+RESET_URL = f"http://localhost:{PORT}/database/reset"
+
+def before_scenario(scenario, context):
+    requests.post(RESET_URL)
