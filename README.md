@@ -13,7 +13,7 @@
     ```bash
     $ sudo -u postgres psql --dbname=postgres -f ./scripts/create_db.sql
     ```
-- (Optional) Set up a virtual environment:
+- (Optional - recommended) Set up a virtual environment:
     ```bash
     $ sudo -u postgres python3 -m venv venv
     $ source venv/bin/activate
@@ -38,6 +38,10 @@
     ```
 
 ## Running the application
+- (Optional) If necessary, activate the virtual environment:
+    ```bash
+    $ source venv/bin/activate
+    ```
 - (Option 1 - recommended) Run the application with flask:
     ```bash
     $ flask run
