@@ -1,10 +1,10 @@
 ## General comments:
 
 - In general, I'm used to working with Python, Flask, Postgres and Pytest, which help me advance a little more quickly.
-- However, I have had a busy schedule these last days, so I didn't have a lot of time to devote to the challenge.
+- However, I have had a busy schedule these last days, so I didn't have a lot of free time to devote to the challenge.
 - Integrating the BDD tests was a challenging task, and something I had never done in Python, but I think it was a good exercise.
-- Using flask-openapi to generate the documentation was also a challenge, since I had never used it before. But I think some of it requirements (RequestBodys, Responses, Paths, Headers) also help you orgnize your code in some aspects.
-- I didn't comment every method of every class, because I believe most of them do what their name suggests.
+- Using flask-openapi to generate the documentation was also a challenge, since I had never used it before. But I think some of it requirements (RequestBodys, Responses, Paths, Headers), while sometimes annoying, also help you orgnize your code in some aspects.
+- I didn't comment every method of every class, because I believe most of them are self-explanatory.
 
 ### Testing
 
