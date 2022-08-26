@@ -1,6 +1,6 @@
 from flask_openapi3 import APIBlueprint
 from flask import jsonify
-from project.helpers.request_helpers.exception_handler import ExceptionHandler
+from project.exceptions.exception_handler import ExceptionHandler
 from project.schemas.schemas import UserSchema
 from project.controllers.user_controller import UserController
 from http import HTTPStatus

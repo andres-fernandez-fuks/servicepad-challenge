@@ -3,7 +3,7 @@ from functools import wraps
 from flask import current_app, request
 
 from project.exceptions.exceptions import AuthenticationException, OwnershipException
-from project.helpers.request_helpers.exception_handler import ExceptionHandler
+from project.exceptions.exception_handler import ExceptionHandler
 
 
 def token_required(f):

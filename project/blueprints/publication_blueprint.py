@@ -7,7 +7,7 @@ from project.helpers.request_helpers.error_helper import (
     ErrorResponse,
     ExtraResponseAssembler,
 )
-from project.helpers.request_helpers.exception_handler import ExceptionHandler
+from project.exceptions.exception_handler import ExceptionHandler
 from project.helpers.request_helpers.publication_helper import (
     PublicationBasePath,
     PublicationCompletePath,

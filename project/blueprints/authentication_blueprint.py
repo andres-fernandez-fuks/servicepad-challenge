@@ -2,7 +2,7 @@ from http import HTTPStatus
 from flask import request
 from flask_openapi3 import APIBlueprint
 from project.controllers.authentication_controller import AuthenticationController
-from project.helpers.request_helpers.exception_handler import ExceptionHandler
+from project.exceptions.exception_handler import ExceptionHandler
 
 from project.helpers.request_helpers.login_helper import (
     LoginHeader,
