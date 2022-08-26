@@ -65,3 +65,13 @@
         ```bash
         $ behave
         ```
+
+## Accessing the documentation
+- Run the application:
+    ```bash
+    $ flask run
+    ```
+- Open the documentation: access (preferably through the browser) to:
+    ```
+    http://localhost:{PORT}/openapi/swagger
+    ```
