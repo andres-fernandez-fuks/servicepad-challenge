@@ -5,6 +5,11 @@ from project.exceptions.exceptions import (
 )
 from http import HTTPStatus
 
+"""
+Exception handler. Blueprints can delegate all exception related logic to this object.
+It is responsible for handling exceptions and returning a proper response to the client.
+"""
+
 
 class ExceptionHandler:
     """

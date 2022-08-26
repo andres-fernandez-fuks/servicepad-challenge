@@ -4,6 +4,10 @@ from project.repositories.user_repository import UserRepository
 
 
 class UserController:
+    """
+    User controller. Handles the flow of the CRUD methods related to users.
+    """
+
     @classmethod
     def get_user(cls, user_id):
         return UserRepository.load_by_id(user_id)

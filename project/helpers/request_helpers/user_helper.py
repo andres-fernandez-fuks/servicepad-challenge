@@ -1,5 +1,10 @@
 from pydantic import BaseModel, Field
 
+"""
+Classes used by UserBlueprint.
+They represent either a request body/header/path or a response body, related to a User.
+"""
+
 
 class UserResponse(BaseModel):
     id: int = Field(..., description="The user's id")

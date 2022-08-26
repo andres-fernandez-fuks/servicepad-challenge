@@ -17,6 +17,9 @@ LOGOUT_ENDPOINT = "/logout"
 EXPECTED_RESPONSES = {}
 
 authentication_blueprint = APIBlueprint("authentication_blueprint", __name__)
+"""
+Blueprint in charge of handling all authentication related requests (login and logout).
+"""
 
 
 @authentication_blueprint.post(

@@ -20,6 +20,10 @@ USERS_ENDPOINT = "/users"
 EXPECTED_RESPONSES = {}
 
 users_blueprint = APIBlueprint("users_blueprint", __name__)
+"""
+Blueprint in charge of handling all user related requests.
+"""
+
 
 user_schema = UserSchema()
 

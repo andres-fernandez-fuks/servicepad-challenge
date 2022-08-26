@@ -2,6 +2,9 @@ from datetime import datetime
 from project import db
 
 class BaseModel(db.Model):
+    """
+    Base model class.
+    """
     __abstract__ = True
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

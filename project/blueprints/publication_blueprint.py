@@ -22,6 +22,9 @@ PUBLICATIONS_ENDPOINT = "/users/<user_id>/publications"
 EXPECTED_RESPONSES = {}
 
 publication_blueprint = APIBlueprint("publication_blueprint", __name__)
+"""
+Blueprint in charge of handling all publications related requests.
+"""
 
 publication_schema = PublicationSchema()
 

@@ -7,6 +7,9 @@ from project.helpers.request_helpers.exception_handler import ExceptionHandler
 
 
 def token_required(f):
+    """
+    Not a class, but a function that wraps around some endpoints to verify that the user is authenticated.
+    """
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None

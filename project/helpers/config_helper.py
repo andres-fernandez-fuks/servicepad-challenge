@@ -4,6 +4,10 @@ from project.config import ConfigurationMode
 
 
 class ConfigHelper:
+    """
+    Helper class for configuring the application. It has two config modes but the number could be expanded.
+    """
+
     @staticmethod
     def config_app(app, test_mode):
         config_mode = config("CONFIG_MODE")

@@ -9,6 +9,9 @@ RESET_ENDPOINT = "/database/reset"
 EXPECTED_RESPONSES = {}
 
 reset_blueprint = APIBlueprint("reset_blueprint", __name__)
+"""
+Resets the database (testing purposes only)
+"""
 
 
 @reset_blueprint.post(f"{RESET_ENDPOINT}", description="Resets the DB (testing only!)")

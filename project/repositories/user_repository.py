@@ -3,6 +3,9 @@ from project.models.user import User
 
 
 class UserRepository(BaseRepository):
+    """
+    User repository. Handles the persistence of the users in the database.
+    """
     object_class = User
 
     @classmethod

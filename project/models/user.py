@@ -4,7 +4,7 @@ from project import db, bcrypt
 
 class User(BaseModel):
     """
-    Represents an user, with email, password, fullname and photo
+    Represents an user, with email, password, fullname and photo.
     """
 
     __tablename__ = "users"

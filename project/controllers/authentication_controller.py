@@ -7,6 +7,9 @@ from project.repositories.user_repository import UserRepository
 
 
 class AuthenticationController:
+    """
+    Authentication controller. Handles the flow of login and logout requests.
+    """
 
     AUTH_VALID_PERIOD_HS = 2
 
@@ -19,7 +22,6 @@ class AuthenticationController:
             },
             current_app.config["SECRET_KEY"],
         )
-
 
     @classmethod
     def decode_token(cls, token):

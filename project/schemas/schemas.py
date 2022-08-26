@@ -1,9 +1,15 @@
-
 from project import ma
 from marshmallow_sqlalchemy import fields
 
+"""
+Schemas classes that know how to serialize and deserialize data.
+In this case, I only used them for serializing.
+"""
+
+
 DATE_FORMAT = "%d/%m/%y"
 DATE_HOUR_FORMAT = "%d/%m/%y %H:%M:%S"
+
 
 class BaseModelSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -14,15 +20,13 @@ class BaseModelSchema(ma.SQLAlchemyAutoSchema):
     created_at = fields.fields.DateTime(format=DATE_HOUR_FORMAT)
     updated_at = fields.fields.DateTime(format=DATE_HOUR_FORMAT)
 
+
 class UserSchema(BaseModelSchema):
     class Meta:
-        fields = BaseModelSchema.Meta.fields + (
-            "fullname",
-            "email",
-            "photo",
-        )
+        fields = BaseModelSchema.Meta.fields + ("fullname", "email", "photo")
         include_relationships = True
         load_instance = True
+
 
 class PublicationSchema(BaseModelSchema):
     class Meta:

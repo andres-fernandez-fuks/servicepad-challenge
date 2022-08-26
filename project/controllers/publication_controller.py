@@ -5,6 +5,11 @@ from project.repositories.user_repository import UserRepository
 
 
 class PublicationController:
+    """
+    Publication controller. Handles the flow of the CRUD methods related to publications.
+    It also checks the identity of the user that made the request against the owner of the publication.
+    """
+
     @classmethod
     def get_user_publication(cls, user_id, publication_id):
         cls.validate_ownership(user_id, publication_id)

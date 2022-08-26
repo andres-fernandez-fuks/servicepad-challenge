@@ -4,6 +4,9 @@ from project import db
 
 
 class BaseRepository:
+    """
+    Base repository class, handles persistence of the models in the database.
+    """
     __abstract__ = True
     object_class = BaseModel
 
