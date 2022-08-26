@@ -6,10 +6,6 @@ from project.repositories.user_repository import UserRepository
 
 class PublicationController:
     @classmethod
-    def get_all_user_publications(cls, user_id):
-        return PublicationRepository.load_all_from_user(user_id)
-
-    @classmethod
     def get_user_publication(cls, user_id, publication_id):
         cls.validate_ownership(user_id, publication_id)
         return PublicationRepository.load_by_id(publication_id)
